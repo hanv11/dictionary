@@ -5,19 +5,29 @@
  */
 package dictionary;
 
+import dao.DuocPhamDAO;
+import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
-
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import model.DuocPham;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 /**
  *
  * @author tuan
  */
 public class MainWindown extends javax.swing.JFrame {
 
+    List<DuocPham> list = new ArrayList();
     /**
      * Creates new form MainWindown
      */
     public MainWindown() {
         initComponents();
+  
     }
 
     /**
@@ -51,6 +61,11 @@ public class MainWindown extends javax.swing.JFrame {
 
         jTextField1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jTextField1.setToolTipText("Tra tên nguyên liệu hóa dược và thành phần hóa dược");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField1KeyPressed(evt);
@@ -64,7 +79,7 @@ public class MainWindown extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(245, 245, 245))
+                .addGap(495, 495, 495))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(110, 110, 110)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -128,7 +143,7 @@ public class MainWindown extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(115, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(aboutUsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -178,6 +193,24 @@ public class MainWindown extends javax.swing.JFrame {
             rw.jTextField1.setText(jTextField1.getText());
             rw.jLabel6.setText(jTextField1.getText());
         }
+        switch(evt.getKeyCode()) {
+            case KeyEvent.VK_BACK_SPACE:
+                break;
+            case  KeyEvent.VK_ENTER:
+                break;
+                default:
+                    EventQueue.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            DuocPhamDAO dpdao = new DuocPhamDAO();
+                            String txt = jTextField1.getText();
+                            list = dpdao.getAll(txt);
+                            autocomplete(txt);
+                        }
+                    });
+                    break;
+                
+        }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void aboutUsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutUsButtonMouseClicked
@@ -216,6 +249,28 @@ public class MainWindown extends javax.swing.JFrame {
         qw.setVisible(true);
     }//GEN-LAST:event_wordsReferedButtonMouseClicked
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+    
+    private void autocomplete(String txt) {
+        String complete = "";
+        int start = txt.length();
+        int last = txt.length();
+        int i;
+        for(i = 0; i < list.size(); i++) {
+           if(list.get(i).getTen().toString().startsWith(txt)) {
+               complete = list.get(i).getTen().toString();
+               last = complete.length();
+               break; 
+           }
+        }
+        if(last > start) {
+            jTextField1.setText(complete);
+            jTextField1.setCaretPosition(last);
+            jTextField1.moveCaretPosition(start);
+        }
+    }
     /**
      * @param args the command line arguments
      */

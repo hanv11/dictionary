@@ -23,7 +23,7 @@ public class ConnectionUtils {
 
     private ConnectionUtils() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(URL, USER, PASS);
         } catch (Exception e) {
             e.printStackTrace();

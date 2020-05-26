@@ -9,6 +9,7 @@ import com.mysql.cj.xdevapi.PreparableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import model.DuocPham;
@@ -55,10 +56,7 @@ public class DuocPhamDAO implements DAO<DuocPham>{
          return Optional.of(dp);
     }
 
-    @Override
-    public List<DuocPham> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
     @Override
     public void save(DuocPham t) {
@@ -68,6 +66,36 @@ public class DuocPhamDAO implements DAO<DuocPham>{
     @Override
     public void update(DuocPham t, String[] params) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<DuocPham> getAll(String keyword) {
+        
+        String sql = "SELECT * FROM " + TABLE;
+        List<DuocPham> list = new ArrayList<>();
+        try {
+            Connection conn = ConnectionUtils.getInstance().getConnection();
+            PreparedStatement psmt = conn.prepareStatement(sql);
+//            psmt.setString(1, keyword);
+            ResultSet rs = psmt.executeQuery();
+            
+            while(rs.next()) {
+                DuocPham dp = new DuocPham();
+                dp.setId(rs.getInt(TABLE_ID));
+                dp.setTen(rs.getString(TEN));
+                dp.setDinhtinh(rs.getString(DINH_TINH));
+                dp.setDinhluong(rs.getString(DINH_LUONG));
+                dp.setTichchat(rs.getString(TINH_CHAT));
+                dp.setTapchat(rs.getString(TAP_CHAT));
+                dp.setBaoquan(rs.getString(BAO_QUAN));
+                list.add(dp);
+            }
+           
+            
+        } catch (Exception e) {
+        }
+        return list;
+
     }
     
 }

@@ -6,6 +6,7 @@
 package dictionary;
 
 import dao.DuocPhamDAO;
+import java.util.List;
 import java.util.Optional;
 import model.DuocPham;
 
@@ -20,10 +21,12 @@ public class Main {
      */
     public static void main(String[] args) {
         DuocPhamDAO dpdao = new DuocPhamDAO();
-        Optional<DuocPham> dp = dpdao.get(1);
-       
-        if(dp != null) {
-            System.out.println(dp.get().getTen());
+//        Optional<DuocPham> dp = dpdao.get(1);
+//        System.out.println(dp.get().getTen());
+        
+        List<DuocPham> list = dpdao.getAll("");
+        for(DuocPham dp: list) {
+            System.out.println(dp.getTen());
         }
         // TODO code application logic here
         MainWindown mw = new MainWindown();

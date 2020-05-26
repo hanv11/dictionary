@@ -17,7 +17,7 @@ public interface DAO<T> {
 
     Optional<T> get(int id);
 
-    List<T> getAll();
+    List<T> getAll(String key);
 
     void save(T t);
 
