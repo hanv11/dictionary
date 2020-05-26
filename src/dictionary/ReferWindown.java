@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package thu_bai_tap_lon_2;
+package dictionary;
 
 /**
  *
