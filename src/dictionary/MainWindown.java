@@ -196,11 +196,12 @@ public class MainWindown extends javax.swing.JFrame {
                 if(list.size() == 0) {
                     return;
                 }      
-                ReferWindown rw = new ReferWindown();
+                ReferWindown rw = new ReferWindown(list.get(0));
                 this.hide();
                 rw.setVisible(true);
                 rw.jTextField1.setText(jTextField1.getText());
                 rw.jLabel6.setText(jTextField1.getText());
+                
                 break;
             default:
                 EventQueue.invokeLater(new Runnable() {

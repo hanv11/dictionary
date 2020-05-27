@@ -5,6 +5,8 @@
  */
 package dictionary;
 
+import model.DuocPham;
+
 /**
  *
  * @author tuan
@@ -14,8 +16,17 @@ public class ReferWindown extends javax.swing.JFrame {
     /**
      * Creates new form ReferWindown
      */
+    private DuocPham dp;
     public ReferWindown() {
         initComponents();
+    }
+   
+     public ReferWindown(DuocPham dp) {
+        initComponents();
+        if(dp != null) {
+            this.dp = dp;
+            jTextArea1.setText(dp.getTichchat());
+        }
     }
 
     /**
@@ -187,6 +198,7 @@ public class ReferWindown extends javax.swing.JFrame {
         // TODO add your handling code here:
         MainWindown mw = new MainWindown();
         this.hide();
+        this.dispose();
         mw.setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
 
