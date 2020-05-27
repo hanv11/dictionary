@@ -187,28 +187,32 @@ public class MainWindown extends javax.swing.JFrame {
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            ReferWindown rw = new ReferWindown();
-            this.hide();
-            rw.setVisible(true);
-            rw.jTextField1.setText(jTextField1.getText());
-            rw.jLabel6.setText(jTextField1.getText());
+          
         }
         switch(evt.getKeyCode()) {
             case KeyEvent.VK_BACK_SPACE:
                 break;
             case  KeyEvent.VK_ENTER:
+                if(list.size() == 0) {
+                    return;
+                }      
+                ReferWindown rw = new ReferWindown();
+                this.hide();
+                rw.setVisible(true);
+                rw.jTextField1.setText(jTextField1.getText());
+                rw.jLabel6.setText(jTextField1.getText());
                 break;
-                default:
-                    EventQueue.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            DuocPhamDAO dpdao = new DuocPhamDAO();
-                            String txt = jTextField1.getText();
-                            list = dpdao.getAll(txt);
-                            autocomplete(txt);
-                        }
-                    });
-                    break;
+            default:
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        DuocPhamDAO dpdao = new DuocPhamDAO();
+                        String txt = jTextField1.getText();
+                        list = dpdao.getAll(txt);
+                        autocomplete(txt);
+                    }
+                });
+                break;  
                 
         }
     }//GEN-LAST:event_jTextField1KeyPressed

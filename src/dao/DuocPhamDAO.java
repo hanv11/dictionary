@@ -71,12 +71,12 @@ public class DuocPhamDAO implements DAO<DuocPham>{
     @Override
     public List<DuocPham> getAll(String keyword) {
         
-        String sql = "SELECT * FROM " + TABLE;
+        String sql = "SELECT * FROM " + TABLE + " WHERE " + TEN + " LIKE ? " ;
         List<DuocPham> list = new ArrayList<>();
         try {
             Connection conn = ConnectionUtils.getInstance().getConnection();
             PreparedStatement psmt = conn.prepareStatement(sql);
-//            psmt.setString(1, keyword);
+            psmt.setString(1, '%'+keyword+'%');
             ResultSet rs = psmt.executeQuery();
             
             while(rs.next()) {
